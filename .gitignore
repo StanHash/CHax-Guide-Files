@@ -1,3 +1,8 @@
+bin/lyn
+bin/pea
+bin/ea
+bin/EventAssembler/*
+
 # Prerequisites
 *.d
 
