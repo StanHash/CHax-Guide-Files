@@ -1,5 +1,5 @@
 .SUFFIXES:
-.PHONY: objects asmgen events bindmps clean
+.PHONY: all clean
 
 # making sure devkitARM exists and is set up
 ifeq ($(strip $(DEVKITARM)),)
@@ -38,40 +38,31 @@ DEPFILES := $(addprefix $(DEPSDIR)/, $(notdir $(CFILES:.c=.d)))
 CDEPFLAGS = -MD -MT $*.o -MT $*.asm -MF $(DEPSDIR)/$(notdir $*).d -MP
 
 # "make all" phony targets
-objects: $(OFILES);
-asmgen: $(ASMFILES);
-events: $(LYNFILES);
-bindmps: $(DMPFILES)
+all: $(OFILES) $(ASMFILES) $(LYNFILES) $(DMPFILES);
 
 # "Clean" target
 clean:
-	@rm -f $(OFILES) $(ASMFILES) $(LYNFILES) $(DMPFILES) $(DEPFILES)
-	@echo done.
+	rm -f $(OFILES) $(ASMFILES) $(LYNFILES) $(DMPFILES) $(DEPFILES)
 
 # C to ASM rule
 %.asm: %.c
-	@echo "$(notdir $<) => $(notdir $@)"
-	@$(CC) $(CFLAGS) $(CDEPFLAGS) -S $< -o $@ -fverbose-asm $(ERROR_FILTER)
+	$(CC) $(CFLAGS) $(CDEPFLAGS) -S $< -o $@ -fverbose-asm $(ERROR_FILTER)
 
 # C to OBJ rule
 %.o: %.c
-	@echo "$(notdir $<) => $(notdir $@)"
-	@$(CC) $(CFLAGS) $(CDEPFLAGS) -c $< -o $@ $(ERROR_FILTER)
+	$(CC) $(CFLAGS) $(CDEPFLAGS) -c $< -o $@ $(ERROR_FILTER)
 
 # ASM to OBJ rule
 %.o: %.s
-	@echo "$(notdir $<) => $(notdir $@)"
-	@$(AS) $(ARCH) $< -o $@ $(ERROR_FILTER)
+	$(AS) $(ARCH) $< -o $@ $(ERROR_FILTER)
 
 # OBJ to DMP rule
 %.dmp: %.o
-	@echo "$(notdir $<) => $(notdir $@)"
-	@$(OBJCOPY) -S $< -O binary $@
+	$(OBJCOPY) -S $< -O binary $@
 
 # OBJ to EVENT rule
 %.lyn.event: %.o $(LYNLIB)
-	@echo "$(notdir $<) => $(notdir $@)"
-	@lyn $< $(LYNLIB) > $@
+	lyn $< $(LYNLIB) > $@
 
 # Including generated dependency rules
 -include $(DEPFILES)

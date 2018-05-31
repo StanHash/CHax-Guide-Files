@@ -1,7 +1,7 @@
-bin/lyn
-bin/pea
-bin/ea
-bin/EventAssembler/*
+sources/bin/lyn
+sources/bin/pea
+sources/bin/ea
+sources/bin/EventAssembler/*
 
 # Prerequisites
 *.d
