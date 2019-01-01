@@ -14,6 +14,9 @@
 
 #include "gbafe.h"
 
-void some_asmc() {
-	eventSlot[0xC] = GetGameTime();
+/*!
+ * Gets game time (in frames) and stores it to event slot C.
+ */
+void asmc_get_time(void) {
+    gEventSlot[0xC] = GetGameTime();
 }

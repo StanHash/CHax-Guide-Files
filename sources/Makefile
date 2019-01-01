@@ -9,15 +9,15 @@ endif
 # including devkitARM tool definitions
 include $(DEVKITARM)/base_tools
 
-# adding local binaries to path
-PATH := $(abspath .)/bin:$(PATH)
+# defining path of lyn
+LYN := $(abspath .)/Tools/lyn
 
 # setting up compilation flags
 ARCH   := -mcpu=arm7tdmi -mthumb -mthumb-interwork
-CFLAGS := $(ARCH) -Wall -Os -mtune=arm7tdmi -fomit-frame-pointer -ffast-math
+CFLAGS := $(ARCH) -Wall -Os -mtune=arm7tdmi -mlong-calls
 
-# lyn library object
-LYNLIB := fe8u.o
+# lyn reference object
+LYNREF := fe8u.o
 
 # listing files
 CFILES := $(wildcard *.c)
@@ -46,23 +46,23 @@ clean:
 
 # C to ASM rule
 %.asm: %.c
-	$(CC) $(CFLAGS) $(CDEPFLAGS) -S $< -o $@ -fverbose-asm $(ERROR_FILTER)
+	$(CC) $(CFLAGS) $(CDEPFLAGS) -S $< -o $@ -fverbose-asm
 
 # C to OBJ rule
 %.o: %.c
-	$(CC) $(CFLAGS) $(CDEPFLAGS) -c $< -o $@ $(ERROR_FILTER)
+	$(CC) $(CFLAGS) $(CDEPFLAGS) -c $< -o $@
 
 # ASM to OBJ rule
 %.o: %.s
-	$(AS) $(ARCH) $< -o $@ $(ERROR_FILTER)
+	$(AS) $(ARCH) $< -o $@
 
 # OBJ to DMP rule
 %.dmp: %.o
 	$(OBJCOPY) -S $< -O binary $@
 
 # OBJ to EVENT rule
-%.lyn.event: %.o $(LYNLIB)
-	lyn $< $(LYNLIB) > $@
+%.lyn.event: %.o $(LYNREF)
+	$(LYN) $< $(LYNREF) > $@
 
 # Including generated dependency rules
 -include $(DEPFILES)

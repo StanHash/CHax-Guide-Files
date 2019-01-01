@@ -1,7 +1,11 @@
-sources/bin/lyn
-sources/bin/pea
-sources/bin/ea
-sources/bin/EventAssembler/*
+sources/Tools/lyn
+sources/Tools/EventAssembler/*
+
+# Generated files
+sources/*.o
+sources/*.lyn.event
+sources/*.dmp
+sources/*.asm
 
 # Prerequisites
 *.d

@@ -9,10 +9,13 @@
  *   GIVEITEMTOMAIN 0 // give mone
  */
 
-static const int (*GetGameTime)() = (int (*)()) (0x08000D29);
+static const int(*GetGameTime)() = (int(*)()) (0x08000D29); // note the thumb bit here.
 
-static int* const eventSlot = (int* const) (0x030004B8);
+static int* const sEventSlot = (int* const) (0x030004B8);
 
-void some_asmc() {
-	eventSlot[0xC] = GetGameTime();
+/*!
+ * Gets game time (in frames) and stores it to event slot C.
+ */
+void asmc_get_time(void) {
+    sEventSlot[0xC] = GetGameTime();
 }
