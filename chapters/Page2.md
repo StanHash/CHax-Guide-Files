@@ -185,14 +185,14 @@ There's multiple ways to go on this:
   ```c
   #pragma long_calls
   
-  int GetGameTime();
+  int GetGameTime(void);
   
   // as many other function declaration as you want
   
   #pragma long_calls_off
   ```
   
-  This `long_calls` pragma applies the `long_call` attribute automatically to all function declarations encountered until the next `long_calls_off` pragma. This is fine and I've been using this method for the last year now, but I feel like the next and last one may be the better way.
+  This `long_calls` pragma applies the `long_call` attribute automatically to all function declarations encountered until the next `long_calls_off` pragma. This is fine and I've been using this method for the last year now (this what was originally recommended in this guide too), but I feel like the next and last one may actually be the slightly better way.
 
 - We could use the compiler and target-specific program option `-mlong-calls`, which makes *all* references to outside code a "long call". This may be a bit unnecessary for function calls accross our own files (that would probably be inserted close together aka within `bl`-range), but this allows us to move the details related to the limitations of our setup *outside* of the source itself which I feel may be preferable.
   

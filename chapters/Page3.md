@@ -1,6 +1,6 @@
 # Advanced Makefile shenanigans
 
-_**Note**: I do plan on writing an even more in-depth guide on using makefiles for hacking with EA in the future (I'm really only thewaiting for the EA features such a setup needs to work to get into release!ColorzCore). This will still only focus on C stuff._
+_**Note**: I do plan on writing an even more in-depth guide on using makefiles for hacking with EA in the future (I'm really only waiting for the EA features such a setup needs to work to get into release!ColorzCore). This will still only focus on C stuff._
 
 Ok so here we are going to be messing with the Makefile a bit. To be clear about the state of it *before* this part, Here's what it should look like (that's assuming you did everything I told you you could with the makefile):
 
